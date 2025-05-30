@@ -1,7 +1,9 @@
 import { setCookie, getCookie } from './cookie';
-import { TIngredient, TOrder, TOrdersData, TUser } from './types';
+import { TIngredient, TOrder, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
+
+console.log('API URL:', process.env.BURGER_API_URL);
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
@@ -71,13 +73,19 @@ type TOrdersResponse = TServerResponse<{
   data: TOrder[];
 }>;
 
-export const getIngredientsApi = () =>
-  fetch(`${URL}/ingredients`)
-    .then((res) => checkResponse<TIngredientsResponse>(res))
+export const getIngredientsApi = () => {
+  console.log('getIngredientsApi called, URL:', URL);
+  return fetch(`${URL}/ingredients`)
+    .then((res) => {
+      console.log('fetch response:', res);
+      return checkResponse<TIngredientsResponse>(res);
+    })
     .then((data) => {
+      console.log('data after checkResponse:', data);
       if (data?.success) return data.data;
       return Promise.reject(data);
     });
+};
 
 export const getFeedsApi = () =>
   fetch(`${URL}/orders/all`)
