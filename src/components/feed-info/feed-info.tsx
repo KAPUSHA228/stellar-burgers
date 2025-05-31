@@ -12,7 +12,7 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  const orders = useSelector((state) => state.profileOrders.orders);
+  const orders = useSelector((state) => state.feeds.feeds.orders);
 
   const readyOrders = getOrders(orders, 'done');
   const pendingOrders = getOrders(orders, 'pending');

@@ -15,7 +15,7 @@ export const BurgerConstructor: FC = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  //const getConstructorElements = useSelector((state) => state.constructor);
   const onOrderClick = () => {
     if (!bun || loading) return;
     if (!user) {

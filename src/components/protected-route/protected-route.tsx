@@ -5,9 +5,13 @@ import { Preloader } from '../ui/preloader';
 
 interface ProtectedRouteProps {
   children: ReactNode;
+  isPublic?: boolean;
 }
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
+export const ProtectedRoute: FC<ProtectedRouteProps> = ({
+  children,
+  isPublic = false
+}) => {
   const location = useLocation();
   const { user, isAuthChecked, loading } = useSelector((state) => state.user);
 

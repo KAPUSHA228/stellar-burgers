@@ -1,8 +1,12 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo, useMemo, useCallback } from 'react';
 import { BurgerConstructorElementUI } from '@ui';
 import { BurgerConstructorElementProps } from './type';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { TConstructorIngredient } from '../../utils/types';
+import {
+  moveIngredient,
+  removeIngredient
+} from '../../services/slices/constructor';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
@@ -11,12 +15,18 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
       ingredients: []
     };
     const safeIngredients = Array.isArray(ingredients) ? ingredients : [];
-    const handleMoveDown = () => {};
+    const dispatch = useDispatch();
+    const handleMoveDown = useCallback(() => {
+      dispatch(moveIngredient({ from: index, to: index + 1 }));
+    }, [dispatch, index]);
 
-    const handleMoveUp = () => {};
+    const handleMoveUp = useCallback(() => {
+      dispatch(moveIngredient({ from: index, to: index - 1 }));
+    }, [dispatch, index]);
 
-    const handleClose = () => {};
-
+    const handleClose = useCallback(() => {
+      dispatch(removeIngredient(ingredient.id));
+    }, [dispatch, ingredient.id]);
     const price = useMemo(
       () =>
         (bun ? bun.price * 2 : 0) +

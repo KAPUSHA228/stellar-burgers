@@ -19,6 +19,10 @@ import {
 } from '@components';
 import '../../index.css';
 import styles from './app.module.css';
+import { useDispatch } from '../../services/store';
+import { useEffect, useMemo, useCallback } from 'react';
+
+import { FeedsThunk } from '@slices';
 
 const App = () => {
   const location = useLocation();

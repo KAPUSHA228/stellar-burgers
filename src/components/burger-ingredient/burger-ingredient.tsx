@@ -19,12 +19,14 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     };
 
     return (
-      <BurgerIngredientUI
-        ingredient={ingredient}
-        count={count}
-        locationState={{ background: location }}
-        handleAdd={handleAdd}
-      />
+      <div data-testid='ingredient-item'>
+        <BurgerIngredientUI
+          ingredient={ingredient}
+          count={count}
+          locationState={{ background: location }}
+          handleAdd={handleAdd}
+        />
+      </div>
     );
   }
 );

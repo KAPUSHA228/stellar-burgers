@@ -21,8 +21,6 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => {
   const items = useSelector((state) => state.ingredients.items);
   const constructorItemsState = useSelector((state) => state.constructor);
-  console.log('BurgerIngredients items:', items);
-  console.log('BurgerConstructor items:', constructorItemsState);
 
   const onOrderClickHandler = () => {
     console.log('Оформить заказ клик!', constructorItems);
@@ -32,7 +30,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   return (
     <section className={styles.burger_constructor}>
       {constructorItems.bun ? (
-        <div className={`${styles.element} mb-4 mr-4`}>
+        <div className={`${styles.element} mb-4 mr-4`} data-testid='bunTop'>
           <ConstructorElement
             type='top'
             isLocked
@@ -44,11 +42,12 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       ) : (
         <div
           className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
+          data-testid='noBunsTop'
         >
           Выберите булки
         </div>
       )}
-      <ul className={styles.elements}>
+      <ul className={styles.elements} data-testid='ingredientsList'>
         {(constructorItems.ingredients || []).length > 0 ? (
           (constructorItems.ingredients || []).map(
             (item: TConstructorIngredient, index: number) => (
@@ -69,7 +68,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         )}
       </ul>
       {constructorItems.bun ? (
-        <div className={`${styles.element} mt-4 mr-4`}>
+        <div className={`${styles.element} mt-4 mr-4`} data-testid='bunBottom'>
           <ConstructorElement
             type='bottom'
             isLocked
@@ -81,6 +80,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       ) : (
         <div
           className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
+          data-testid='noBunsBottom'
         >
           Выберите булки
         </div>

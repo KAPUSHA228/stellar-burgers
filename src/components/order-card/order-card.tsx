@@ -11,7 +11,6 @@ const maxIngredients = 6;
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-  // Берём ингредиенты из Redux
   const ingredients: TIngredient[] = useSelector(
     (state) => state.ingredients.items
   );
@@ -58,3 +57,4 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
     />
   );
 });
+export default memo(OrderCard);

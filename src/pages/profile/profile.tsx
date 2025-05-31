@@ -3,7 +3,6 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
-  // Берём user из Redux
   const user = useSelector((state) => state.user.user);
 
   const [formValue, setFormValue] = useState({
