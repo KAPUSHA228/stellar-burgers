@@ -1,19 +1,9 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { AppHeaderUI } from '@ui';
-import { useSelector } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from '@app-store';
+import { getName } from '@slices';
+
 export const AppHeader: FC = () => {
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
-  const handleProfileClick = () => {
-    if (user) {
-      navigate('/profile');
-    } else {
-      navigate('/login');
-    }
-  };
-  return (
-    <AppHeaderUI userName={user?.name} onProfileClick={handleProfileClick} />
-  );
+  const userName = useSelector(getName);
+  return <AppHeaderUI userName={userName} />;
 };
-export default memo(AppHeader);

@@ -20,15 +20,21 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { useDispatch } from '../../services/store';
-import { useEffect, useMemo, useCallback } from 'react';
-
-import { FeedsThunk } from '@slices';
+import { useEffect } from 'react';
+import { getUser, IngredientsThunk, setUserCheck } from '@slices';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state?.background;
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(IngredientsThunk());
+    dispatch(getUser())
+      .unwrap()
+      .catch(() => {})
+      .finally(() => dispatch(setUserCheck()));
+  }, []);
   const handleModalClose = () => {
     navigate(-1);
   };
