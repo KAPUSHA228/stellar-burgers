@@ -20,7 +20,10 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
+      <div
+        className={`${styles.element} mb-4 mr-4`}
+        data-cy='constructor-bun-up'
+      >
         <ConstructorElement
           type='top'
           isLocked
@@ -32,6 +35,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
+        data-cy='burger_constructor_empty_top'
       >
         Выберите булки
       </div>
@@ -51,24 +55,30 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       ) : (
         <div
           className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}
+          data-cy='burger_constructor_empty_middle'
         >
           Выберите начинку
         </div>
       )}
     </ul>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`}>
+      <div
+        className={`${styles.element} mt-4 mr-4`}
+        data-cy='constructor-bun-down'
+      >
         <ConstructorElement
           type='bottom'
           isLocked
           text={`${constructorItems.bun.name} (низ)`}
           price={constructorItems.bun.price}
           thumbnail={constructorItems.bun.image}
+          data-cy='burger_constructor_down'
         />
       </div>
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
+        data-cy='burger_constructor_empty_down'
       >
         Выберите булки
       </div>
@@ -84,6 +94,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         size='large'
         children='Оформить заказ'
         onClick={onOrderClick}
+        data-cy='burger_constructor_submit'
       />
     </div>
 
