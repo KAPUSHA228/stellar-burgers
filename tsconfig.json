@@ -44,7 +44,7 @@
         "src/utils/burger-api.ts"
       ],
       "@slices": [
-        "src/services/slices"
+        "src/services"
       ],
       "@selectors": [
         "src/services/selectors"
@@ -54,6 +54,9 @@
       ],
       "@cookie": [
         "src/utils/cookie"
+      ],
+      "@protect": [
+        "src/components/protected-route"
       ]
     }
   },

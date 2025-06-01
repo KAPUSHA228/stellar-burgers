@@ -1,15 +1,17 @@
 import { FC, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+import { Preloader } from '@ui';
+import { OrderInfoUI } from '@ui';
 import { TIngredient } from '@utils-types';
-import { useSelector } from '../../services/store';
+import { useSelector } from '@app-store';
+import { getIngredients, getOrders } from '@slices';
+import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
-  // Берём orderData и ingredients из Redux
-  const orderData = useSelector((state) => state.order.order);
-  const ingredients: TIngredient[] = useSelector(
-    (state) => state.ingredients.items
+  const orderData = useSelector(getOrders).find(
+    (ord) => ord.number === Number(useParams().number)
   );
+
+  const ingredients: TIngredient[] = useSelector(getIngredients);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -22,7 +24,7 @@ export const OrderInfo: FC = () => {
     };
 
     const ingredientsInfo = orderData.ingredients.reduce(
-      (acc: TIngredientsWithCount, item: string) => {
+      (acc: TIngredientsWithCount, item) => {
         if (!acc[item]) {
           const ingredient = ingredients.find((ing) => ing._id === item);
           if (ingredient) {

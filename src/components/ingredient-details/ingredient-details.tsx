@@ -3,14 +3,13 @@ import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { useMemo } from 'react';
+import { getIngredients } from '@slices';
 
 export const IngredientDetails: FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const ingredients = useSelector((state) => state.ingredients.items);
-  const ingredientData = useMemo(
-    () => ingredients.find((item) => item._id === id),
-    [ingredients, id]
+  const ingreds = useSelector(getIngredients);
+  const idParam = useParams();
+  const ingredientData = ingreds.find(
+    (ingredient) => ingredient._id === idParam.id
   );
 
   if (!ingredientData) {

@@ -1,11 +1,6 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector, useDispatch } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
-import { createOrder, closeOrderModal } from '../../services/slices/order';
-import { Modal } from '../modal/modal';
-import { OrderDetailsUI } from '../ui/order-details/order-details';
 import {
   BuyBurgerThunk,
   clearConstructor,
@@ -14,6 +9,8 @@ import {
   getOrderData,
   getStatusBuyBurger
 } from '@slices';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '@app-store';
 
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(getConstructorIngredients);
@@ -51,23 +48,14 @@ export const BurgerConstructor: FC = () => {
     [constructorItems]
   );
 
-
   return (
-    <>
-      <BurgerConstructorUI
-        price={price}
-        orderRequest={loading}
-        constructorItems={constructorItems}
-        orderModalData={order}
-        onOrderClick={onOrderClick}
-        closeOrderModal={handleCloseModal}
-      />
-      {isModalOpen && (
-        <Modal title='Номер заказа' onClose={handleCloseModal}>
-          {order && <OrderDetailsUI orderNumber={order.number} />}
-          {error && <div style={{ color: 'red' }}>{error}</div>}
-        </Modal>
-      )}
-    </>
+    <BurgerConstructorUI
+      price={price}
+      orderRequest={orderRequest}
+      constructorItems={constructorItems}
+      orderModalData={orderModalData}
+      onOrderClick={onOrderClick}
+      closeOrderModal={closeOrderModal}
+    />
   );
 };

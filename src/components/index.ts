@@ -12,4 +12,3 @@ export { OrderInfo } from './order-info/order-info';
 export { OrderStatus } from './order-status/order-status';
 export { OrdersList } from './orders-list/orders-list';
 export { ProfileMenu } from './profile-menu/profile-menu';
-export { ProtectedRoute } from './protected-route/protected-route';

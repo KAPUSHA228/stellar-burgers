@@ -1,19 +1,31 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { FC } from 'react';
-import { useSelector, useDispatch } from '../../services/store';
-import { FeedsThunk } from '@slices';
+import { TOrder } from '@utils-types';
+import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from '@app-store';
+import { FeedsThunk, getOrders } from '@slices';
 
 export const Feed: FC = () => {
-  // Берём заказы из Redux
-  const dispatch = useDispatch();
-  const orders = useSelector((state) => state.feeds.feeds.orders);
+  const orders: TOrder[] = useSelector(getOrders);
+  const dis = useDispatch();
+  const updateFeeds = () => {
+    dis(FeedsThunk());
+  };
+  useEffect(() => {
+    const number = setInterval(updateFeeds, 2000);
+    return () => clearInterval(number);
+  }, []);
 
   if (!orders.length) {
     return <Preloader />;
   }
-  const handleFeedUpdate = () => {
-    dispatch(FeedsThunk());
-  };
-  return <FeedUI orders={orders} handleGetFeeds={handleFeedUpdate} />;
+
+  return (
+    <FeedUI
+      orders={orders}
+      handleGetFeeds={() => {
+        updateFeeds();
+      }}
+    />
+  );
 };

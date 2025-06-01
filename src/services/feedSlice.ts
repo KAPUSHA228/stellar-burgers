@@ -28,8 +28,10 @@ export const feedSlice = createSlice({
       .addCase(FeedsThunk.fulfilled, (state, action) => {
         state.feeds = action.payload;
       })
-      .addCase(FeedsThunk.rejected, (state, action) => {
-        console.error(state, action);
+      .addCase(FeedsThunk.rejected, (_state, action) => {
+        if (action.error) {
+          console.error('FeedsThunk rejected:', action.error.message);
+        }
       });
   },
   selectors: {
@@ -40,3 +42,4 @@ export const feedSlice = createSlice({
 });
 
 export const { getOrders, getTotal, getTotalToday } = feedSlice.selectors;
+export { initialState as initialStateFeeds };

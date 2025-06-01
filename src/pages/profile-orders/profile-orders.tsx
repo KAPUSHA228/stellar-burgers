@@ -1,18 +1,20 @@
 import { ProfileOrdersUI } from '@ui-pages';
+import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from '../../services/store';
-import { fetchProfileOrders } from '../../services/slices/profile-orders';
+import { useDispatch, useSelector } from '@app-store';
+import { getUserOrders, userOrdersThunk, isload } from '@slices';
+import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {
-  const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.feeds.feeds);
-
+  const orders: TOrder[] = useSelector(getUserOrders);
+  const isDataSuccess: boolean = useSelector(isload);
+  const dis = useDispatch();
   useEffect(() => {
-    dispatch(fetchProfileOrders());
-  }, [dispatch]);
+    dis(userOrdersThunk());
+  }, []);
 
-  //if (loading) return <div>Загрузка заказов...</div>;
-  //if (error) return <div style={{ color: 'red' }}>{error}</div>;
-
+  if (isDataSuccess) {
+    return <Preloader />;
+  }
   return <ProfileOrdersUI orders={orders} />;
 };

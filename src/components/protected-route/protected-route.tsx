@@ -1,27 +1,30 @@
-import { FC, ReactNode } from 'react';
+import { useSelector } from '@app-store';
+import { getCheckUser, getName } from '@slices';
+import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from '../../services/store';
-import { Preloader } from '../ui/preloader';
 
-interface ProtectedRouteProps {
-  children: ReactNode;
+type ProtectedRouterProps = {
+  children: React.ReactNode;
   isPublic?: boolean;
-}
+};
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({
-  children,
-  isPublic = false
-}) => {
+export function ProtectedRouter({ children, isPublic }: ProtectedRouterProps) {
   const location = useLocation();
-  const { user, isAuthChecked, loading } = useSelector((state) => state.user);
+  const user = useSelector(getName);
+  const userCheck = useSelector(getCheckUser);
 
-  if (!isAuthChecked) {
+  if (!userCheck) {
     return <Preloader />;
   }
 
-  if (!user) {
-    return <Navigate to='/login' state={{ from: location }} replace />;
+  if (!isPublic && !user) {
+    return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
-  return <>{children}</>;
-};
+  if (isPublic && user) {
+    const from = location.state?.from || { pathname: '/' };
+    return <Navigate replace to={from} />;
+  }
+
+  return children;
+}
